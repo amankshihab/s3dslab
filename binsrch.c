@@ -43,19 +43,19 @@ void sort(){
 
 void bin_srch(int x){
     
-    int low, high, mid, i = 0, p = 0;
+    int low, high, mid, i = 0, p = 0, flag = 0;
     
     low = 0; high = n-1;
     mid = ((high + low) / 2);
     
-    while(x != a[mid] && low <= high){
+    while(flag == 0 && low <= high){
 
         mid = ((low + high) / 2);
 
         if(x == a[mid]){
 
             pos = mid;
-            p = 1;
+            flag = 1;
         }
         else if(x > a[mid]){
 
@@ -66,7 +66,7 @@ void bin_srch(int x){
         }
     } 
     
-    if(p == 1)
+    if(flag == 1)
     printf("\n%d has been at position %d.\n", x, pos);
     else
     printf("\n%d not found in array.\n", x);
