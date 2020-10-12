@@ -3,6 +3,9 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "python.pythonPath": "C:\\Users\\amank_000\\.conda\\envs\\tfgpu\\python.exe"
+    }
 }
 
