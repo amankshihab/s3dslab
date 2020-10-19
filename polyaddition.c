@@ -1,14 +1,14 @@
 #include<stdio.h>
 
-struct polynomial
+struct polynomial   //struct polynomial
 {
     int coeff;
     int expo;
 };
 
-struct polynomial p1[10], p2[10], p3[10];
+struct polynomial p1[10], p2[10], p3[10];   //creating objects
 
-void read1(int t)
+void read1(int t)   //reading first polynomial
 {
     
     for(int i = 0;i < t; i++)
@@ -20,7 +20,7 @@ void read1(int t)
         scanf("%d", &p1[i].expo);
     }
 }
-void read2(int t)
+void read2(int t)   //reading second polynomial
 {
     
     for(int i = 0;i < t; i++)
@@ -32,7 +32,7 @@ void read2(int t)
         scanf("%d", &p2[i].expo);
     }
 }
-int add(struct polynomial p1[10],struct polynomial p2[10],int t1,int t2)
+int add(struct polynomial p1[10],struct polynomial p2[10],int t1,int t2)    //adding the polynomials
 {
     int i = 0,j = 0,k = 0;
     while(i < t1 && j < t2)
@@ -71,7 +71,7 @@ int add(struct polynomial p1[10],struct polynomial p2[10],int t1,int t2)
     }
     return k;
 }
-void display(struct polynomial p[10], int t3)
+void display(struct polynomial p[10], int t3)   //function to display the polynomial
 {
     for(int i = 0;i < t3; i++)
     {
@@ -80,7 +80,7 @@ void display(struct polynomial p[10], int t3)
         printf("+ ");
     }
 }
-void main()
+void main() //main funtion
 {
     int t1, t2, t3;
     printf("\nEnter polynomial in descending order of powers\n");
