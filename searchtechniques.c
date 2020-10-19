@@ -3,7 +3,7 @@
 
 int n, a[100];
 
-void input(){
+void input(){   //taking in input
     
     printf("\nEnter the size of the array:");
     scanf("%d", &n);
@@ -14,7 +14,7 @@ void input(){
     }
 }
 
-void lin_srch(){
+void lin_srch(){    //function for linear search
 
     int e, pos = 0, flag = 0;
     
@@ -39,7 +39,7 @@ void lin_srch(){
     }
 }
 
-int is_sorted(){
+int is_sorted(){    //function to check it the array is sorted
 
     int flag = 1;
     
@@ -54,7 +54,7 @@ int is_sorted(){
     return flag;
 }
 
-void sort(){
+void sort(){    //function to sort if unsorted
 
     int temp;
 
@@ -78,7 +78,7 @@ void sort(){
     printf("\n");
 }
 
-void bin_srch(){
+void bin_srch(){    //funtion to perform binary search
     
     int low, high, mid, i = 0, p = 0, flag = 0, x, pos;
 
@@ -115,7 +115,7 @@ void bin_srch(){
     printf("\n%d not found in array.\n", x);
 }
 
-void main(){
+void main(){    //main function
 
     int ans = 1;
 
