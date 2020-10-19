@@ -8,22 +8,20 @@ void lin_srch(){
     
     printf("\nEnter the element to search:");
     scanf("%d", &e);
+
+    printf("\n");
     
     for(int i = 0; i < n; i++){
 
         if(e == a[i]){
 
-            pos = i;
+            //pos = i;
             flag = 1;
-            break;
+            printf("%d found at position %d.\n", e, i);
         }
     }
 
-    if(flag != 0){
-    
-        printf("\n%d found at position %d.\n", e, pos);
-    }
-    else{
+    if(flag == 0){
 
         printf("\n%d not found in array.\n", e);
     }
