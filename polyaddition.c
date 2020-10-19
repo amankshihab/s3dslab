@@ -73,8 +73,6 @@ int add(struct polynomial p1[10],struct polynomial p2[10],int t1,int t2)
 }
 void display(struct polynomial p[10], int t3)
 {
- 
-    
     for(int i = 0;i < t3; i++)
     {
         printf("%d(x^%d) ",p[i].coeff, p[i].expo);
