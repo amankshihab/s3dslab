@@ -7,7 +7,7 @@ struct node{
     struct node *link;
 };
 
-struct node *start = NULL, *temp, *loc;     //loc for getting location of element
+struct node *start = NULL, *temp, *loc;     //loc for getting location of element in insert operations
 
 void display(){
 
@@ -38,6 +38,78 @@ void display(){
                 }
             }while(temp -> link != NULL);
         }
+    }
+}
+
+void delete_beg(){
+
+    if(start == NULL)
+    printf("\nNothing to delete! Linked list is empty!\n");
+    else{
+
+        temp = start;
+        start = start -> link;
+
+        printf("\n%d is deleted!\n", temp -> data);
+
+        free(temp);
+
+        display();
+    }
+}
+
+void delete_pos(){
+
+    if(start == NULL)
+    printf("\nNothing to delete! Linked list is empty!\n");
+    else{
+
+        printf("Enter the position of element to delete(starting from 1):");
+        int pos;
+        scanf("%d", &pos);
+
+        if(pos == 1)
+        delete_beg();
+        else{
+            temp = start;
+            loc = temp -> link;
+
+            for(int i = 1; i < (pos - 1); i++){
+
+                temp = temp -> link;
+                loc = loc -> link;
+            }
+
+            printf("\n%d is deleted!\n", loc -> data);
+            temp -> link = loc -> link;
+            free(loc);
+
+            display();
+        }
+    }
+}
+
+void delete_end(){
+
+    if(start == NULL)
+    printf("\nNothing to delete! Linked list is empty!\n");
+    else if(start -> link == NULL)
+    delete_beg();
+    else{
+
+        temp = start;
+        loc = temp -> link;
+
+        while(loc -> link != NULL){
+
+            temp = temp -> link;
+            loc = loc -> link;
+        }
+        temp -> link = NULL;
+
+        printf("%d is deleted!", loc -> data);
+        free(loc);
+        display();
     }
 }
 
@@ -99,7 +171,7 @@ void insert_end(){
     struct node *p;
     p = (struct node*)malloc(sizeof(struct node));
 
-    printf("Enter the element to insert:");
+    printf("Enter the element to be inserted:");
     int item;
     scanf("%d", &item);
 
@@ -141,7 +213,13 @@ void main(){
                     break;
             case 3 : insert_at_pos();
                     break;
-            case 4 : exit(0);
+            case 4 : delete_beg();
+                    break;
+            case 5 : delete_end();
+                    break;
+            case 6 : delete_pos();
+                    break;
+            case 7 : display();
                     break;
             case 8 : exit(0);
                     break;
