@@ -1,13 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+int count = 0;
+
 struct node{
 
     int data;
     struct node *link;
 };
 
-struct node *start = NULL, *temp, *loc;     //loc for getting location of element in insert operations
+struct node *start = NULL, *temp, *loc;     
 
 void display(){
 
@@ -41,118 +43,49 @@ void display(){
     }
 }
 
-void delete_beg(){
+void insert(int pos, int x){
 
-    if(start == NULL)
-    printf("\nNothing to delete! Linked list is empty!\n");
-    else{
-
-        temp = start;
-        start = start -> link;
-
-        printf("\n%d is deleted!\n", temp -> data);
-
-        free(temp);
-
-        display();
-    }
-}
-
-void delete_pos(){
-
-    if(start == NULL)
-    printf("\nNothing to delete! Linked list is empty!\n");
-    else{
-
-        printf("Enter the position of element to delete(starting from 1):");
-        int pos;
-        scanf("%d", &pos);
-
-        if(pos == 1)
-        delete_beg();
-        else{
-            temp = start;
-            loc = temp -> link;
-
-            for(int i = 1; i < (pos - 1); i++){
-
-                temp = temp -> link;
-                loc = loc -> link;
-            }
-
-            printf("\n%d is deleted!\n", loc -> data);
-            temp -> link = loc -> link;
-            free(loc);
-
-            display();
-        }
-    }
-}
-
-void delete_end(){
-
-    if(start == NULL)
-    printf("\nNothing to delete! Linked list is empty!\n");
-    else if(start -> link == NULL)
-    delete_beg();
-    else{
-
-        temp = start;
-        loc = temp -> link;
-
-        while(loc -> link != NULL){
-
-            temp = temp -> link;
-            loc = loc -> link;
-        }
-        temp -> link = NULL;
-
-        printf("%d is deleted!", loc -> data);
-        free(loc);
-        display();
-    }
-}
-
-void insert_beg(){
-
-    int el, pos;
+    count += 1;
     
-    printf("\nEnter the element to insert:");
-    scanf("%d", &el);
-
     struct node *p;
     p = (struct node*)malloc(sizeof(struct node));
-
+    
+    printf("Enter the element to be entered:");
+    int el;
+    scanf("%d", &el);
     
     p -> data = el;
+
+    if(pos == 1 && x == 0){
     
-    if(start == NULL)
-    p -> link = NULL;
-    else
-    p -> link = start;
+        if(start == NULL)
+        p -> link = NULL;
+        else
+        p -> link = start;
     
-    start = p;
+        start = p;
+    }
+    else if(x == 1){
 
-    display();
-}
+         if(start == NULL){
 
-void insert_at_pos(){
+            p -> link = NULL;
+            start = p;
+        }
+        else{
 
-    struct node *p;
-    p = (struct node*)malloc(sizeof(struct node));
-    
-    printf("Enter the position to enter:");
-    int ele, pos;
-    scanf("%d", &pos);
+            temp = start;
+            while(temp -> link != NULL){
 
-    if(pos == 1)
-    insert_beg();
+                temp = temp -> link;
+            }
+        
+            temp -> link = p;
+            p -> link = p;
+            p -> link = NULL;
+        }
+    }
     else{
-
-        printf("Enter the element to be inserted:");
-        scanf("%d", &ele);
-
-        p -> data = ele;
 
         temp = start;
 
@@ -162,35 +95,52 @@ void insert_at_pos(){
         }
         p -> link = temp -> link;
         temp -> link = p;
-        display();
     }
+    display();
 }
 
-void insert_end(){
+void delete(int pos, int x){
 
-    struct node *p;
-    p = (struct node*)malloc(sizeof(struct node));
+    temp = start;
+    
+    if(start == NULL)
+    printf("\nNothing to delete! Linked list is empty!\n");
+    else if(pos == 1 && x == 0){
+        
+        start = start -> link;
 
-    printf("Enter the element to be inserted:");
-    int item;
-    scanf("%d", &item);
+        printf("\n%d is deleted!\n", temp -> data);
+    }
+    else if(pos != 1 && x == 0){
 
-    p -> data = item;
-    if(start == NULL){
+        //temp = start;
+        loc = temp -> link;
 
-        p -> link = NULL;
-        start = p;
+        for(int i = 1; i < (pos - 1); i++){
+
+            temp = temp -> link;
+            loc = loc -> link;
+        }
+
+        printf("\n%d is deleted!\n", loc -> data);
+        temp -> link = loc -> link;
+            
+        free(loc);
     }
     else{
 
-        temp = start;
-        while(temp -> link != NULL){
+        loc = temp -> link;
+
+        while(loc -> link != NULL){
 
             temp = temp -> link;
+            loc = loc -> link;
         }
-        temp -> link = p;
-        p -> link = p;
-        p -> link = NULL;
+        temp -> link = NULL;
+
+        printf("\n%d is deleted!\n", loc -> data);
+        
+        free(loc);
     }
 
     display();
@@ -198,7 +148,7 @@ void insert_end(){
 
 void main(){
 
-    int ans = 0;
+    int ans = 0, ind = 0, posi;
     
     while(1){
 
@@ -207,17 +157,21 @@ void main(){
 
         switch(ans){
 
-            case 1 : insert_beg();
+            case 1 : insert(1, 0);
                     break;
-            case 2 : insert_end();
+            case 2 : insert(0, 1);
                     break;
-            case 3 : insert_at_pos();
+            case 3 : printf("Enter the position at which you want to insert:");
+                     scanf("%d", &posi);
+                     insert(posi, 0);
                     break;
-            case 4 : delete_beg();
+            case 4 : delete(1, 0);
                     break;
-            case 5 : delete_end();
+            case 5 : delete(0,1);
                     break;
-            case 6 : delete_pos();
+            case 6 : printf("Enter the position from which you want to delete:");
+                     scanf("%d", &posi);
+                     delete(posi, 0);
                     break;
             case 7 : display();
                     break;
