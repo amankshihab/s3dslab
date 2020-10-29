@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count = 0;
-
 struct node{
 
     int data;
@@ -45,8 +43,6 @@ void display(){
 
 void insert(int pos, int x){
 
-    count += 1;
-    
     struct node *p;
     p = (struct node*)malloc(sizeof(struct node));
     
@@ -96,6 +92,7 @@ void insert(int pos, int x){
         p -> link = temp -> link;
         temp -> link = p;
     }
+    
     display();
 }
 
