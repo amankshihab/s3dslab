@@ -13,23 +13,28 @@ struct node *top = NULL, *temp;
 
 void display(){
     
-    printf("\nThe stack now is:\n");
-        
-    temp = top;
-
-    if(temp -> link == NULL)
-    printf("%d  ", temp -> data);
-    else if(top == NULL)
-    printf("\n!!EMPTY!!\n");
+    if(top == NULL)
+    printf("\nLinked stack is empty! Stack underflow!\n");
     else{
+    
+        printf("\nThe stack now is:\n");
+        
+        temp = top;
 
-        while(temp -> link != NULL){
+        if(temp -> link == NULL)
+        printf("%d  ", temp -> data);
+        else if(top == NULL)
+        printf("\n!!EMPTY!!\n");
+        else{
 
-            printf("%d  ", temp -> data);
-            temp = temp -> link;
+            while(temp -> link != NULL){
 
-            if(temp -> link == NULL)
-            printf("%d  ", temp -> data);
+                printf("%d  ", temp -> data);
+                temp = temp -> link;
+
+                if(temp -> link == NULL)
+                printf("%d  ", temp -> data);
+            }
         }
     }
 }
@@ -71,6 +76,7 @@ void pop(){
     if(i != -1){
 
         temp = top;
+        printf("\n%d is popped.\n", temp -> data);
 
         if(temp -> link == NULL)
         top = NULL;
@@ -81,12 +87,13 @@ void pop(){
 
         i -= 1;
 
-        //display();
+        if(i == -1)
+        printf("\nLinked stack has been emptied!\n");
+        else
+        display();
     }
     else
     printf("\nNothing to delete! Stack Underflow!\n");
-
-    display();
 }
 
 void main(){
