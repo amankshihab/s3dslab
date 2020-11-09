@@ -8,7 +8,7 @@ struct node{
     struct node *next;
 };
 
-struct node *head = NULL, *tail = NULL, *temp, *loc;
+struct node *head = NULL, *tail = NULL, *temp, *loc, *pack;
 
 void traverse(int x){
 
@@ -113,6 +113,7 @@ void del_beg(){
         else{
 
             head = temp -> next;
+            head -> prev = NULL;
 
             free(temp);
         }
@@ -138,17 +139,22 @@ void del_atpos(){
 
             temp = temp -> next;
             loc = temp -> next;
+        }
 
             if(loc == tail)
             del_end();
             else{
 
+                pack = loc -> next;
                 temp -> next = loc -> next;
+                pack -> prev = temp;
 
                 free(loc);
             }
-        }
+        //}
     }
+
+    traverse(1);
 }
 
 void insert_beg(){
