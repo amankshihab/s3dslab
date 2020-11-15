@@ -94,8 +94,7 @@ void add(struct poly *s1, struct poly *s2){
     int s;
 
     //p = s1; q = s2;
-
-    while(s1 -> next != NULL && s2 -> next != NULL){
+    while(s1 != NULL && s2 != NULL){
 
         if(s1 -> exp == s2 -> exp){
 
@@ -116,6 +115,7 @@ void add(struct poly *s1, struct poly *s2){
             result(s2 -> coeff, s2 -> exp);
             s2 = s2 -> next;
         }
+    }
 
         while(s2 != NULL){
 
@@ -127,7 +127,6 @@ void add(struct poly *s1, struct poly *s2){
             result(s1 -> coeff, s1 -> exp);
             s1 = s1 -> next;
         }
-    }
 }
 
 void main(){
@@ -138,6 +137,7 @@ void main(){
     start2 = read();
     printf("\nThe second polynomial is:\n");
     display(start2);
+    printf("\n\nThe resultant polynomial is:\n");
     add(start1, start2);
     display(startr);
 }
