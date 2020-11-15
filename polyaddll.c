@@ -1,169 +1,77 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int k = 1;
-
-struct node{
+struct poly{
 
     int coeff;
-    int expo;
-    struct node *link;
+    int exp;
+    struct poly *next;
 };
+ 
+struct poly *start1, *start2;
 
-struct node *temp, *a, *b, *c, *start = NULL, *p1, *p2, *res, *f;
+void display(struct poly *st){
 
-void display(struct node *z){
+    struct poly *temp;
 
-    //struct node *t = start;
-    z = start;
-    
-    if(z -> link == NULL)
-    printf("%dx^(%d)", z -> coeff, z -> expo);
-    
-    while(z -> link != NULL){
+    temp = st;
 
-        printf("%dx^(%d) + ", z -> coeff, z -> expo);
-        z = z -> link;
+    while(temp -> next != NULL){
 
-        if(z -> link == NULL)
-        printf("%dx^(%d)", z -> coeff, z -> expo);
+        printf("%d(x)^%d + ", temp -> coeff, temp -> exp);
+
+        if(temp -> next == NULL){
+
+            printf("%d(x)^%d", temp -> coeff, temp -> exp);
+        }
     }
-
-    start = NULL;
 }
 
-struct node *readpoly(struct node *y){
+struct poly *read(){
 
-    //struct node *p = (struct node*)malloc(sizeof(struct node));
-    //struct node *p;
-    
-    printf("\n\nEnter the no. of elements in the polynomial:");
-    int n, i = 0, coeff, expo;
+    struct poly *start = NULL;
+
+    printf("Enter the no. of terms in the polynomial:");
+    int n, c, e;
     scanf("%d", &n);
+    struct poly *temp;
 
-    printf("\n");
+    for(int i = 0; i < n; i++){
 
-    while(i < n){
+        printf("\n");
+        struct poly *p;
+        p = (struct poly*)malloc(sizeof(struct poly));
 
-        y = (struct node*)malloc(sizeof(struct node));
-        
-        printf("\nEnter the coefficient of x^%d:", (n - i - 1));
-        scanf("%d", &coeff);
-        
-        y -> coeff = coeff; y -> expo = (n - i - 1);
-
+        printf("Enter the coefficient :");
+        scanf("%d", c);
+        printf("Enter the exponent :");
+        scanf("%d", e);
+        p -> coeff = c;
+        p -> exp = e;
+        p -> next = NULL;
+    
         if(start == NULL){
 
-            start = y;
-            y -> link = NULL;
-            temp = start;
+            start = p;
+            temp = p;
+            printf("11a");
         }
         else{
 
-            temp -> link = y;
-            y -> link = NULL;
-            temp = temp -> link;
-        }
-        
-        i += 1;
-    }
-
-    printf("\nPolynomial %d is :\n", k);
-    k += 1;
-    //display(p);
-    return y;
-}
-
-struct node *addpoly(struct node *h, struct node *l){
-
-    h = start; l = start; res = start; f = start;
-
-    while(1){
-
-        f = (struct node *)malloc(sizeof(struct node));
-
-        
-        if(h -> expo == l -> expo){
-
-            f -> coeff = h -> coeff + l -> coeff;
-            f -> expo = h -> expo;
-
-            res -> link = f;
-            res = res -> link;
-            //res = res -> link; 
-            h = h-> link; l = l -> link; res -> link = NULL;
-        }
-        if(h -> expo > l -> expo){
-
-            f -> expo = h -> expo;
-            f -> coeff = h -> coeff;
-            res -> link = f;
-            res = res -> link;
-            //res = res -> link; 
-            h = h -> link;
-            res -> link = NULL;
-        }
-        if(h -> link == NULL || l -> link == NULL)
-        break;
-        else{
-
-            f -> expo = l -> expo;
-            f -> coeff = l -> coeff;
-            res -> link = f;
-            res = res -> link;
-            //res -> link = NULL;
-            //res = res -> link; 
-            l = l -> link; 
-            res -> link = NULL;
+            temp -> next = p;
+            temp = temp -> next;
+            printf("111");
         }
     }
 
-    while(1){
-
-        if(h -> link == NULL)
-        break;
-        else{
-
-            f = (struct node *)malloc(sizeof(struct node));
-            
-            f -> coeff = h -> coeff;
-            f -> expo = h -> expo;
-            res -> link = f;
-            res = res -> link;
-            //res = res -> link; 
-            l = l -> link;
-            res -> link = NULL;
-        }
-    }
-    while(1){
-
-        if(l -> link == NULL)
-        break;
-        else{
-
-            f = (struct node *)malloc(sizeof(struct node));
-            
-            f -> coeff = l -> coeff;
-            f -> expo = l -> expo;
-            res -> link = f;
-            res = res -> link; 
-            l = l -> link;
-            res -> link = NULL;
-        }
-    }
-
-    //res -> link = NULL;
-
-    return res;
+    return start;
 }
 
 void main(){
 
-    a = readpoly(p1);
-    display(a);
-    b = readpoly(p2);
-    display(b);
-    
-    c = addpoly(a, b);
-    display(c); 
+    start1 = read();
+    display(start1);
+    start2 = read();
+    display(start2);
+    //addAB();
 }
