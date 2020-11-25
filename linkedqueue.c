@@ -43,7 +43,7 @@ void display(){
  }
 }
 
-void delete_beg(){
+void dequeue(){
 
     if(start == NULL)
     printf("\nNothing to delete! Linked list is empty!\n");
@@ -60,7 +60,7 @@ void delete_beg(){
     }
 }
 
-void insert_end(){
+void enqueue(){
 
     struct node *p;
 
@@ -110,10 +110,10 @@ void main(){
         switch(ans){
 
             case 1 : ++count;
-                     insert_end();
+                     enqueue();
                         break;
             case 2 : ++count;
-                     delete_beg();
+                     dequeue();
                         break;
             case 3 : ++count;
                      display();

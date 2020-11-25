@@ -29,17 +29,59 @@ void display(){
     }
 }
 
-void insert_beg(){
+void del_beg(){
+
+    if(start == NULL)
+    printf("\nCircular Linked List is empty!");
+    else{
+
+        temp = start;
+
+        start = start -> link;
+        free(temp);
+
+        display();
+    }
+}
+
+void insert_end(){
 
     struct node *p = (struct node*)malloc(sizeof(struct node));
 
-    printf("Enter the element to enter:");
+    printf("Enter the element you want to insert at the end:");
     int ele;
     scanf("%d", &ele);
 
     p -> data = ele;
-    //start = p;
-    //p -> link = start;
+
+    if(start == NULL){
+
+        start = p;
+        p -> link = start;
+    }
+    else{
+
+        temp = start;
+
+        while(temp -> link != start)
+            temp = temp -> link;
+
+        temp -> link = p;
+        p -> link = start;
+    }
+
+    display();
+}
+
+void insert_beg(){
+
+    struct node *p = (struct node*)malloc(sizeof(struct node));
+
+    printf("Enter the element to enter at the beginning:");
+    int ele;
+    scanf("%d", &ele);
+
+    p -> data = ele;
     
     if(start == NULL){
         start = p;
@@ -47,7 +89,6 @@ void insert_beg(){
     }
     else{
 
-        //p -> link = start -> link;
         temp = start;
 
         while(temp -> link != start)
@@ -56,6 +97,44 @@ void insert_beg(){
         p -> link = start;
         temp -> link = p;
         start = p; 
+    }
+
+    display();
+}
+
+void insert_atpos(){
+
+    struct node *p = (struct node*)malloc(sizeof(struct node));
+
+    printf("Enter the position at which you want to enter the element in:");
+    int pos, ele;
+    scanf("%d", &pos);
+
+    if(pos == 1)
+    insert_beg();
+    else if(start == NULL)
+    printf("\nCircular linked list not initiated, please initiate it first");
+    else{
+        
+        temp = start;
+
+        for(int i = 1; i < (pos - 1); i++)
+            temp = temp -> link;
+
+        if(temp -> link == start)
+            insert_end();
+        else{
+        
+            printf("Enter the element to be entered:");
+            scanf("%d", &ele);
+
+            p -> data = ele;
+            
+            p -> link = temp -> link;
+            temp -> link = p;
+        
+            display();
+        }
     }
 }
 
@@ -71,6 +150,12 @@ void main(){
         switch(ans){
 
             case 1 : insert_beg();
+                        break;
+            case 2 : insert_atpos();
+                        break;
+            case 3 : insert_end();
+                        break;
+            case 4 : del_beg();
                         break;
             case 8 : display();
                         break;
