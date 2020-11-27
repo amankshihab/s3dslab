@@ -31,12 +31,12 @@ void display(){
  
         do{
 
-            printf("%d ", temp -> data);
+            printf("%d -> ", temp -> data);
             temp = temp -> link;
 
             if(temp -> link == NULL){
  
-                printf("%d ", temp -> data);
+                printf("%d", temp -> data);
             }
         }while(temp -> link != NULL);
     }
