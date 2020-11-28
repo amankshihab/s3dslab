@@ -43,6 +43,24 @@ void display(){
  }
 }
 
+void reverse(){
+
+    temp = start;
+    struct node *next = NULL, *prev = NULL;
+
+    while(temp != NULL){
+
+        next = temp -> link;
+        temp -> link = prev;
+        prev = temp;
+        temp = next;
+    }
+
+    start = prev;
+
+    display();
+}
+
 void delete_beg(){
 
     if(start == NULL)
@@ -75,23 +93,24 @@ void delete_pos(){
         else if(pos > count)
         printf("\nPosition %d doesn't exist!\n", pos);
         else{
+            
             temp = start;
             loc = temp -> link;
 
             for(int i = 1; i < (pos - 1); i++){
 
-            temp = temp -> link;
-            loc = loc -> link;
+                temp = temp -> link;
+                loc = loc -> link;
+            }   
+
+            printf("\n%d is deleted!\n", loc -> data);
+            temp -> link = loc -> link;
+            free(loc);
+
+            display();
         }
-
-        printf("\n%d is deleted!\n", loc -> data);
-        temp -> link = loc -> link;
-        free(loc);
-
-        display();
     }
- }
-}
+}   
 
 void delete_end(){
 
@@ -210,7 +229,7 @@ void main(){
  
     while(1){
 
-        printf("\n\nLinked List Operations:\n\n1.Insert beginning\n2.Insert at end\n3.Insert in the middle\n4.Delete beginning\n5.Delete end\n6.Delete in the middle\n7.Display\n8.Exit\n\nEnter your option:");
+        printf("\n\nLinked List Operations:\n\n1.Insert beginning\n2.Insert at end\n3.Insert in the middle\n4.Delete beginning\n5.Delete end\n6.Delete in the middle\n7.Display\n8.Reverse\n9.Exit\n\nEnter your option:");
         scanf("%d", &ans);
 
         switch(ans){
@@ -235,7 +254,9 @@ void main(){
                         break;
             case 7 : display();
                         break;
-            case 8 : exit(0);
+            case 8 : reverse();
+                        break;
+            case 9 : exit(0);
                         break;
             default : printf("\n!Wrong option!\n");
         }
