@@ -56,7 +56,7 @@ void insertion(int key, int item){
             if(tree[2*l] == '\0'){
 
                 tree[2*l] = item;
-                printf("Inserted as %d node.", 2*l);
+                printf("Inserted as node %d.", 2*l);
                 last = 2 * l + 1;
             }
             else{
@@ -69,7 +69,7 @@ void insertion(int key, int item){
             if(tree[2*l+1] == '\0'){
 
                 tree[2*l+1] = item;
-                printf("Inserted as %d node.", 2*l+1);
+                printf("Inserted as node %d.", 2*l+1);
                 last = 2 * l + 1;
             }
             else{
@@ -77,10 +77,35 @@ void insertion(int key, int item){
                 printf("Insertion to node %d not possible!", l);
             }
         }
+    }
+    else{
+
+        printf("Insertion not possible!");
+    }
+}
+
+void deletion(int key){
+
+    int flag = 0;
+
+    int l = search(1, key);
+
+    if(l != 0){
+
+        if(tree[2*l] == '\0' && tree[2*l+1] == '\0'){
+
+            printf("\nNode %d deleted!\n", l);
+            flag = 1;
+            tree[l] = '\0';
+        }
         else{
 
-            printf("Insertion not possible!");
+            printf("\nCannot delete non leaf nodes!\n");
         }
+    }
+    else{
+
+        printf("\nNode does not exist!\n");
     }
 }
 
@@ -155,21 +180,16 @@ void preorder(int i){
 
 void main(){
 
-    int ch, root, key, item;
+    int ch, root, key, item, del;
 
     printf("\nEnter the root element:");
     scanf("%d", &root);
     
     build_tree(root, 1);
     
-    printf("%d", last);
-    
-    for(int i = 1; i <=last; i++)
-        printf("%d", tree[i]);
-    
     while(1){
 
-        printf("\nBinary Tree Operations:\n\n1.Inorder Traversal\n2.Postorder Traversal\n3.Preorder Traversal\n4.Insertion\n5.Deletion\n6.Exit\n\nEnter your choice:");
+        printf("\n\nBinary Tree Operations:\n\n1.Inorder Traversal\n2.Postorder Traversal\n3.Preorder Traversal\n4.Insertion\n5.Deletion\n6.Exit\n\nEnter your choice:");
         scanf("%d", &ch);
 
         switch(ch){
@@ -183,12 +203,13 @@ void main(){
             case 3 : printf("\nPreorder: ");
                      preorder(1);
                         break;
-            case 4 : printf("Enter the position and item:");
+            case 4 : printf("\nEnter the position and item:");
                      scanf("%d%d", &key, &item);
                      insertion(key, item);
-                     printf("%d", last);
-                     for(int i = 1; i <=last; i++)
-                        printf("%d", tree[i]);
+                        break;
+            case 5 : printf("\nEnter the node to delete:");
+                     scanf("%d", &del);
+                     deletion(del);
                         break;
             case 6 : exit(1);
                         break;
