@@ -189,7 +189,7 @@ void main(){
     
     while(1){
 
-        printf("\n\nBinary Tree Operations:\n\n1.Inorder Traversal\n2.Postorder Traversal\n3.Preorder Traversal\n4.Insertion\n5.Deletion\n6.Exit\n\nEnter your choice:");
+        printf("\n\nBinary Tree (Array) Operations:\n\n1.Inorder Traversal\n2.Postorder Traversal\n3.Preorder Traversal\n4.Insertion\n5.Deletion\n6.Exit\n\nEnter your choice:");
         scanf("%d", &ch);
 
         switch(ch){
