@@ -184,7 +184,7 @@ void deletion(struct tree *temp, int key){
 
         if(s -> lchild == NULL && s -> rchild == NULL){
 
-            printf("\nNode %d %ddeleted!", s -> data, ptr -> data);
+            printf("\nNode %d deleted!", s -> data);
             
             if(ptr -> lchild == s)
                 ptr -> lchild = NULL;
