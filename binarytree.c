@@ -106,9 +106,11 @@ struct tree *search(struct tree *temp, int key){
             ptr = temp;    
             y = search(temp -> lchild, key);
             
-            
-            if(y == NULL)
+            if(y == NULL){
+                
+                ptr = temp;
                 y = search(temp -> rchild, key);
+            }
             return y;
         }
     }
