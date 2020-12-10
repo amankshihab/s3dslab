@@ -74,7 +74,7 @@ void insertion(int key, int item){
             }
             else{
 
-                printf("Insertion to node %d not possible!", l);
+                printf("Insertion to node %d not possible as it's already occupied!", l);
             }
         }
     }
@@ -116,12 +116,12 @@ void build_tree(int i, int item){
         last = i;
 
         tree[i] = item;
-        printf("Node %d has left subtree(y/n):", i);
+        printf("Node %d has left subtree(y/n)?", i);
         char ch;
         scanf("%c%c",&ch,&ch);
         if(ch == 'y'){
             
-            printf("Enter the data to insert:");
+            printf("Enter the data to insert to node %d:", 2*i);
             int dt;
             scanf("%d", &dt);
             build_tree(2*i, dt);
@@ -131,12 +131,12 @@ void build_tree(int i, int item){
             build_tree(0, '\0');
         }
 
-        printf("Node %d has right subtree(y/n):",i);
+        printf("Node %d has right subtree(y/n)?", i);
         char c;
         scanf("%c%c",&c,&c);
         if(c == 'y'){
 
-            printf("Enter the data to insert:");
+            printf("Enter the data to insert to node %d:", 2*i+1);
             int g;
             scanf("%d", &g);
             build_tree(2*i+1, g);
@@ -145,7 +145,6 @@ void build_tree(int i, int item){
 
             build_tree(0, '\0');
         }
-
     }
 }
 void inorder(int i){
@@ -185,7 +184,7 @@ void main(){
     printf("\nEnter the root element:");
     scanf("%d", &root);
     
-    build_tree(root, 1);
+    build_tree(1, root);
     
     while(1){
 
