@@ -25,7 +25,7 @@ struct tree *build_tree(int i){
     
     if(opt == 'y' || opt == 'Y'){
 
-        p ->lchild = build_tree(2*i);
+        p -> lchild = build_tree(2*i);
     }
     else
         p -> lchild = NULL;
@@ -203,6 +203,7 @@ void deletion(struct tree *temp, int key){
 void main(){
 
     start = build_tree(1);
+    printf("%d", start -> data);
     
     int ch, n, del;
     
