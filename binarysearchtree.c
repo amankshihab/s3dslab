@@ -11,29 +11,33 @@ struct tree{
 
 struct tree *start = NULL, *ptr = NULL;
 
-struct tree *search(struct tree *start, int key){
 
-    if(start != NULL){
-        if(start -> data == key)
-            return start;
-        else if(start -> data < key){
-            
-            ptr = start;
-            search(start -> lchild, key);
-        }
-        else if(start -> data > key){
-            
-            ptr = start;
-            search(start -> rchild, key);
-        }
-    }
-    else
-        return NULL;
+struct tree *newnode(int data){     //to create a new node
+
+    struct tree *p = (struct tree*)malloc(sizeof(struct tree));
+
+    p -> data = data;
+    p -> lchild = NULL;
+    p -> rchild =  NULL;
+
+    return p;
+}
+
+struct tree *insertion(struct tree *start, int data){
+    
+    if(start == NULL)
+        return newnode(data);
+    if(data < start -> data)
+        start -> lchild = insertion(start -> lchild, data);
+    else if(data > start -> data)
+        start -> rchild = insertion(start -> rchild, data);
+
+    return start;
 }
 
 struct tree *insucc(struct tree *start){
 
-    struct tree *start1 = start -> rchild;
+    struct tree *start1 = start;
 
     if(start1 != NULL)
         while(start1 -> lchild != NULL)
@@ -42,10 +46,30 @@ struct tree *insucc(struct tree *start){
     return start1;
 }
 
+struct tree *search(struct tree *start, int key){
+
+    if(start != NULL){
+        
+        if(start -> data == key)
+            return start;
+        else if(start -> data < key){
+            
+            ptr = start;
+            search(start -> rchild, key);
+        }
+        else if(start -> data > key){
+            
+            ptr = start;
+            search(start -> lchild, key);
+        }
+    }
+    else
+        return NULL;
+}
+
 void deletion(struct tree *start, int key){
 
     struct tree *l = search(start, key);
-    //printf("%d", l -> data);
     
     if(l != NULL){
         
@@ -62,38 +86,33 @@ void deletion(struct tree *start, int key){
         
             struct tree *f = l -> rchild;
 
-            l -> data = f -> data;
-            free(f);
+            free(l);
+            ptr -> rchild = NULL;
+            insertion(start, f -> data);
         }
         else if(l -> rchild ==  NULL && l -> lchild != NULL){//lchild occupied
 
             struct tree *f = l -> lchild;
 
-            l -> data = f -> data;
-            free(f);
+            free(l);
+            ptr -> lchild = NULL;
+            insertion(start, f -> data);
         }
         else if(l -> lchild != NULL && l -> rchild != NULL){//both occupied
 
-            struct tree *h = search(start, key);
-            struct tree *g = insucc(h);
+            struct tree *g = insucc(l);
 
-            h -> data = g -> data;
+            l -> data = g -> data;
             free(g);
+
+            if(l -> lchild == g)
+                l -> lchild = NULL;
+            if(l -> rchild == g)
+                l -> rchild = NULL;
         }
     }
     else
         printf("\nNode not found!");
-}
-
-struct tree *newnode(int data){     //to create a new node
-
-    struct tree *p = (struct tree*)malloc(sizeof(struct tree));
-
-    p -> data = data;
-    p -> lchild = NULL;
-    p -> rchild =  NULL;
-
-    return p;
 }
 
 void display(struct tree *temp, int space){
@@ -116,17 +135,6 @@ void display(struct tree *temp, int space){
     }
 }
 
-struct tree *insertion(struct tree *start, int data){
-    
-    if(start == NULL)
-        return newnode(data);
-    if(data < start -> data)
-        start -> lchild = insertion(start -> lchild, data);
-    else if(data > start -> data)
-        start -> rchild = insertion(start -> rchild, data);
-
-    return start;
-}
 
 int main(){
 
