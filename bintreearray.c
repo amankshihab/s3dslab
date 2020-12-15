@@ -113,7 +113,8 @@ void build_tree(int i, int item){
 
     if(i != 0){
 
-        last = i;
+        
+        printf("\n%d", last);
 
         tree[i] = item;
         printf("Node %d has left subtree(y/n)?", i);

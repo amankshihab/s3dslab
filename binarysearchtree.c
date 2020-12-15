@@ -9,7 +9,7 @@ struct tree{
     struct tree *rchild;
 };
 
-struct tree *start = NULL, *ptr;
+struct tree *start = NULL, *ptr = NULL;
 
 struct tree *search(struct tree *start, int key){
 
@@ -29,6 +29,60 @@ struct tree *search(struct tree *start, int key){
     }
     else
         return NULL;
+}
+
+struct tree *insucc(struct tree *start){
+
+    struct tree *start1 = start -> rchild;
+
+    if(start1 != NULL)
+        while(start1 -> lchild != NULL)
+            start1 = start1 -> lchild;
+        
+    return start1;
+}
+
+void deletion(struct tree *start, int key){
+
+    struct tree *l = search(start, key);
+    //printf("%d", l -> data);
+    
+    if(l != NULL){
+        
+        if(l -> lchild == NULL && l -> rchild == NULL){ //normal
+
+            if(ptr -> lchild == l)
+                ptr -> lchild = NULL;
+            else if(ptr -> rchild == l)
+                ptr -> lchild = NULL;
+
+            free(l);
+        }
+        else if(l -> lchild == NULL && l -> rchild != NULL){//rchild occupied
+        
+            struct tree *f = l -> rchild;
+
+            l -> data = f -> data;
+            free(f);
+        }
+        else if(l -> rchild ==  NULL && l -> lchild != NULL){//lchild occupied
+
+            struct tree *f = l -> lchild;
+
+            l -> data = f -> data;
+            free(f);
+        }
+        else if(l -> lchild != NULL && l -> rchild != NULL){//both occupied
+
+            struct tree *h = search(start, key);
+            struct tree *g = insucc(h);
+
+            h -> data = g -> data;
+            free(g);
+        }
+    }
+    else
+        printf("\nNode not found!");
 }
 
 struct tree *newnode(int data){     //to create a new node
@@ -72,30 +126,6 @@ struct tree *insertion(struct tree *start, int data){
         start -> rchild = insertion(start -> rchild, data);
 
     return start;
-}
-
-void deletion(struct tree *temp, int key){
-
-    struct tree *s = search(temp, key);
-
-    if(s != NULL){
-
-        if(s -> lchild == NULL && s -> rchild == NULL){
-
-            printf("\nNode %d deleted!", s -> data);
-            
-            if(ptr -> lchild == s)
-                ptr -> lchild = NULL;
-            else
-                ptr -> rchild = NULL;
-
-            free(s);
-        }
-        else
-            printf("\nCannot delete non leaf nodes!");
-    }
-    else
-        printf("\nNode not found!");
 }
 
 int main(){
