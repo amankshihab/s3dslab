@@ -73,8 +73,10 @@ void deletion(struct tree *start, int key){
     
     if(l != NULL){
         
-        if(l -> lchild == NULL && l -> rchild == NULL){ //normal
+        if(l -> lchild == NULL && l -> rchild == NULL){ //normal    case 1
 
+            printf("\n%d deleted!", l -> data);
+            
             if(ptr -> lchild == l)
                 ptr -> lchild = NULL;
             else if(ptr -> rchild == l)
@@ -82,26 +84,34 @@ void deletion(struct tree *start, int key){
 
             free(l);
         }
-        else if(l -> lchild == NULL && l -> rchild != NULL){//rchild occupied
+        else if(l -> lchild == NULL && l -> rchild != NULL){//rchild occupied   case 2a
         
             struct tree *f = l -> rchild;
 
+            printf("\n%d deleted!", l -> data);
             free(l);
             ptr -> rchild = NULL;
             insertion(start, f -> data);
+
+            /*l -> data = f -> data;
+            l -> rchild = NULL;
+            f -> lchild = f -> rchild = NULL;
+            free(l);*/
         }
-        else if(l -> rchild ==  NULL && l -> lchild != NULL){//lchild occupied
+        else if(l -> rchild ==  NULL && l -> lchild != NULL){//lchild occupied  case 2b
 
             struct tree *f = l -> lchild;
 
+            printf("\n%d deleted!", l -> data);
             free(l);
             ptr -> lchild = NULL;
             insertion(start, f -> data);
         }
-        else if(l -> lchild != NULL && l -> rchild != NULL){//both occupied
+        else if(l -> lchild != NULL && l -> rchild != NULL){//both occupied case 3
 
             struct tree *g = insucc(l);
 
+            printf("\n%d deleted!", l -> data);
             l -> data = g -> data;
             free(g);
 
@@ -113,6 +123,36 @@ void deletion(struct tree *start, int key){
     }
     else
         printf("\nNode not found!");
+}
+
+void inorder(struct tree *temp){
+
+    if(temp != NULL){
+
+        inorder(temp -> lchild);
+        printf("%d ", temp -> data);
+        inorder(temp -> rchild);
+    }
+}
+
+void postorder(struct tree *temp){
+
+    if(temp != NULL){
+
+        postorder(temp -> lchild);
+        postorder(temp -> rchild);
+        printf("%d ", temp -> data);
+    }
+}
+
+void preorder(struct tree *temp){
+
+    if(temp != NULL){
+
+        printf("%d ", temp -> data);
+        preorder(temp -> lchild);
+        preorder(temp -> rchild);
+    }
 }
 
 void display(struct tree *temp, int space){
@@ -144,11 +184,10 @@ int main(){
     int root, ch, key;
     scanf("%d", &root);
     start = insertion(start, root);
-    //printf("hh %d", start -> data);
     
     while(1){
 
-        printf("\n\nBinary Search Tree Operations:\n\n1.Insertion\n2.Deletion\n3.Display\n4.Exit\n\nEnter your choice:");
+        printf("\n\nBinary Search Tree Operations:\n\n1.Insertion\n2.Deletion\n3.Display\n4.Inorder Traversal\n5.Postorder traversal\n6.Preorder traversal\n7.Exit\n\nEnter your choice:");
         scanf("%d", &ch);
 
         switch(ch){
@@ -157,14 +196,30 @@ int main(){
                         scanf("%d", &data);
                         insertion(start, data);
                             break;
+
             case 2 :    printf("\nEnter the data to be deleted:");
                         scanf("%d", &key);
                         deletion(start, key);
                             break;
+
             case 3 :    display(start, 1);
                             break;
-            case 4 :    exit(0);
+
+            case 4 :    printf("\nTraversing 'INORDER':\n");
+                        inorder(start);
                             break;
+
+            case 5 :    printf("\nTraversing 'POSTORDER':\n");
+                        postorder(start);
+                            break;
+
+            case 6 :    printf("\nTraversing 'PREORDER':\n");
+                        preorder(start);
+                            break;
+
+            case 7:    exit(0);
+                            break;
+
             default :   printf("\n!!WRONG OPTION!!");
         }
     }
