@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int a[50], b[50], size;;
+int a[50], b[50], size;
 
 void display(){
 
@@ -29,6 +29,36 @@ void enter(){
         scanf("%d", &a[i]);
 
     copy(a, b);
+}
+
+void quicksort(int first, int last){
+
+    int i = first, j = last, pivot = b[first];
+
+    if(first < last){
+
+        while(i < j){
+
+            while(b[i] <= pivot && i < last)
+                i += 1;
+            while(b[j] >= pivot && j > first)
+                j -= 1;
+
+            if(i < j){
+
+                int temp = b[i];
+                b[i] = b[j];
+                b[j] = temp;
+            }
+        }
+
+        int temp = b[j];
+        b[j] = b[first];
+        b[first] = temp;
+
+        quicksort(first, j - 1);
+        quicksort(j + 1, last);
+    }
 }
 
 void bubblesort(){
@@ -103,7 +133,7 @@ void main(){
 
     while(1){
         
-        printf("\n\nSorting Algorithms:\n\n1.Bubble Sort\n2.Selection Sort\n3.Insertion Sort\n4.Revert array\n5.Re-enter array\n6.Display array\n7.Exit\n\nEnter your choice:");
+        printf("\n\nSorting Algorithms:\n\n1.Bubble Sort\n2.Selection Sort\n3.Insertion Sort\n4.Quick sort\n5.Merge sort\n6.Revert array\n7.Re-enter array\n8.Display array\n9.Exit\n\nEnter your choice:");
         scanf("%d", &ch);
 
         switch(ch){
@@ -111,27 +141,38 @@ void main(){
             case 1 :    bubblesort();
                         printf("\nThe array after bubble sort is:\n");
                         display();
-                        break;
+                            break;
+
             case 2 :    sel_sort();
                         printf("\nThe array after selection sort is:\n");
                         display();
-                        break;
-            case 3 :    ins_sort(b);
+                            break;
+
+            case 3 :    ins_sort();
                         printf("\nThe array after insertion sort is:\n");
-                        display(b);
-                        break;
-            case 4 :    copy(a, b);
+                        display();
+                            break;
+
+            case 4 :    quicksort(0, size -1);
+                        display();
+                            break;
+
+            case 6 :    copy(a, b);
                         printf("\nThe array has been reverted!");
                         display();
-                        break;
-            case 5 :    enter();
+                            break;
+
+            case 7 :    enter();
                         printf("\nOriginal array has been changed!\n");
                         display();
-                        break;
-            case 6 :    display(b);
-                        break;
-            case 7 :    exit(1);
-                        break;
+                            break;
+
+            case 8 :    display(b);
+                            break;
+
+            case 9 :    exit(0);
+                            break;
+
             default:    printf("\n!!WRONG CHOICE!!");
         }
     }    

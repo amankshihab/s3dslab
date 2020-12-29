@@ -37,7 +37,7 @@ struct tree *insertion(struct tree *start, int data){
 
 struct tree *insucc(struct tree *start){
 
-    struct tree *start1 = start;
+    struct tree *start1 = start -> rchild;
 
     if(start1 != NULL)
         while(start1 -> lchild != NULL)
@@ -75,50 +75,54 @@ void deletion(struct tree *start, int key){
         
         if(l -> lchild == NULL && l -> rchild == NULL){ //normal    case 1
 
-            printf("\n%d deleted!", l -> data);
+            printf("\n%d deleted!", l -> data); //l is the element to be deleted
             
             if(ptr -> lchild == l)
                 ptr -> lchild = NULL;
             else if(ptr -> rchild == l)
-                ptr -> lchild = NULL;
+                ptr -> rchild = NULL;
 
             free(l);
         }
         else if(l -> lchild == NULL && l -> rchild != NULL){//rchild occupied   case 2a
         
-            struct tree *f = l -> rchild;
+            struct tree *f = l -> rchild;   //l is the element to be deleted
 
             printf("\n%d deleted!", l -> data);
-            free(l);
             ptr -> rchild = NULL;
             insertion(start, f -> data);
-
-            /*l -> data = f -> data;
+            free(l);
+            /*int item = f -> data;
+            l -> data = item;
+            f -> lchild = NULL;
+            f -> rchild = NULL;
             l -> rchild = NULL;
-            f -> lchild = f -> rchild = NULL;
-            free(l);*/
+            free(f);*/
         }
         else if(l -> rchild ==  NULL && l -> lchild != NULL){//lchild occupied  case 2b
 
             struct tree *f = l -> lchild;
 
             printf("\n%d deleted!", l -> data);
-            free(l);
-            ptr -> lchild = NULL;
-            insertion(start, f -> data);
+            int item = f -> data;
+            l -> data = item;
+            f -> lchild = NULL;
+            f -> rchild = NULL;
+            l -> rchild = NULL;
+            free(f);
         }
         else if(l -> lchild != NULL && l -> rchild != NULL){//both occupied case 3
 
             struct tree *g = insucc(l);
 
             printf("\n%d deleted!", l -> data);
-            l -> data = g -> data;
-            free(g);
+            int item = g -> data;
+            //l -> data = item;
 
-            if(l -> lchild == g)
-                l -> lchild = NULL;
-            if(l -> rchild == g)
-                l -> rchild = NULL;
+            deletion(start ,g -> data);
+            l -> data = item;
+        
+            free(g);
         }
     }
     else
@@ -180,7 +184,7 @@ int main(){
 
     int data;
     
-    printf("Enter the root element:");
+    printf("Enter the root element:");  //to initialize tree
     int root, ch, key;
     scanf("%d", &root);
     start = insertion(start, root);
