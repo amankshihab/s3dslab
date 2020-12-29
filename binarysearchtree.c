@@ -75,33 +75,40 @@ void deletion(struct tree *start, int key){
         
         if(l -> lchild == NULL && l -> rchild == NULL){ //normal    case 1
 
-            printf("\n%d deleted!", l -> data); //l is the element to be deleted
+            printf("\n%d deleted!", l -> data);
             
             if(ptr -> lchild == l)
                 ptr -> lchild = NULL;
             else if(ptr -> rchild == l)
                 ptr -> rchild = NULL;
 
+            if(l == start)
+                start = NULL;
+
             free(l);
         }
         else if(l -> lchild == NULL && l -> rchild != NULL){//rchild occupied   case 2a
         
-            struct tree *f = l -> rchild;   //l is the element to be deleted
+            struct tree *f = l -> rchild;
+
+            if(l == start)
+                start = l -> rchild;
 
             printf("\n%d deleted!", l -> data);
-            ptr -> rchild = NULL;
+            /*ptr -> rchild = NULL;
             insertion(start, f -> data);
-            free(l);
-            /*int item = f -> data;
+            free(l);*/
+            int item = f -> data;
             l -> data = item;
-            f -> lchild = NULL;
-            f -> rchild = NULL;
             l -> rchild = NULL;
-            free(f);*/
+            free(f);
         }
         else if(l -> rchild ==  NULL && l -> lchild != NULL){//lchild occupied  case 2b
 
             struct tree *f = l -> lchild;
+
+            if(l == start)
+                start = l -> lchild;
 
             printf("\n%d deleted!", l -> data);
             int item = f -> data;
@@ -115,13 +122,15 @@ void deletion(struct tree *start, int key){
 
             struct tree *g = insucc(l);
 
+            if(l == start)
+                start = g;
+
             printf("\n%d deleted!", l -> data);
             int item = g -> data;
             //l -> data = item;
 
             deletion(start ,g -> data);
             l -> data = item;
-        
             free(g);
         }
     }
