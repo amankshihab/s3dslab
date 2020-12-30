@@ -31,6 +31,57 @@ void enter(){
     copy(a, b);
 }
 
+void merge(int low,int mid,int high)
+{
+    int c[50];
+    int i,k,m;
+    i=low;
+    k=low;
+    m=mid+1;
+    while((i<=mid)&&(m<=high))
+    {
+        if(b[i]<=b[m])
+        {
+            c[k]=b[i];
+            i++;
+        }
+        else
+        {
+            c[k]=b[m];
+            m++;
+        }
+        k++;
+    }
+    while(i<=mid)
+    {
+        c[k]=b[i];
+        k++;
+        i++;
+    }
+    while(m<=high)
+    {
+        c[k]=b[m];
+        k++;
+        m++;
+    }
+    for(i=low;i<=high;i++)
+        b[i]=c[i];
+}
+
+
+void mergesort(int low, int high)
+{
+    int mid;
+    if(low < high)
+    {
+        mid =(low+high)/2;
+        mergesort(low,mid);
+        mergesort(mid+1,high);
+        merge(low,mid,high);
+        display();
+    }
+}
+
 void quicksort(int first, int last){
 
     int i = first, j = last, pivot = b[first];
@@ -56,6 +107,7 @@ void quicksort(int first, int last){
         b[j] = b[first];
         b[first] = temp;
 
+        display();
         quicksort(first, j - 1);
         quicksort(j + 1, last);
     }
@@ -76,6 +128,7 @@ void bubblesort(){
                 b[j + 1] = temp;
             }
         }
+        display();
     }
 }
 
@@ -101,6 +154,8 @@ void sel_sort(){
             b[loc] = b[i];
             b[i] = temp;
         }
+
+        display();
     }
 }
 
@@ -120,6 +175,8 @@ void ins_sort(){
                 break;
         }
         b[j+1] = m;
+
+        display();
     }
 }
 
@@ -139,22 +196,26 @@ void main(){
         switch(ch){
 
             case 1 :    bubblesort();
-                        printf("\nThe array after bubble sort is:\n");
-                        display();
+                        //printf("\nThe array after bubble sort is:\n");
+                        //display();
                             break;
 
             case 2 :    sel_sort();
-                        printf("\nThe array after selection sort is:\n");
-                        display();
+                        //printf("\nThe array after selection sort is:\n");
+                        //display();
                             break;
 
             case 3 :    ins_sort();
-                        printf("\nThe array after insertion sort is:\n");
-                        display();
+                        //printf("\nThe array after insertion sort is:\n");
+                        //display();
                             break;
 
             case 4 :    quicksort(0, size -1);
-                        display();
+                            break;
+
+            case 5 :    mergesort(0, size - 1);
+                        //display();
+                        //display();
                             break;
 
             case 6 :    copy(a, b);
@@ -167,7 +228,7 @@ void main(){
                         display();
                             break;
 
-            case 8 :    display(b);
+            case 8 :    display();
                             break;
 
             case 9 :    exit(0);
