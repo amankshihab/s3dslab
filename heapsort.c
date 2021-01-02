@@ -43,11 +43,11 @@ void swap(int *a, int *b){
     *b = temp;
 }
 
-void maxheap(int index){
+void maxheap(int index, int sz){
 
-    if(index <= size){
+    if(index <= sz){
         
-        maxheap(2*index);
+        maxheap(2*index, sz);
         
         int great = greatest(index, 2*index, 2*index+1);
 
@@ -58,20 +58,27 @@ void maxheap(int index){
         if(heap[great] == heap[2*index+1])
             swap(&heap[index], &heap[2*index+1]);
 
-        maxheap(2*index+1);
+        maxheap(2*index+1, sz);
     }
 }
 
+//root and last are indices
 void heapsort(int root, int last){
 
     printf("\n%d", last);
     
-    if(last != 0){
+    if(last > 1){
         
-        swap(&heap[root], &heap[last]);
-        last = last - 1;
-        maxheap(1);
-        heapsort(heap[root], heap[last]);
+        if(heap[root] > heap[last]){
+            
+            swap(&heap[root], &heap[last]);
+            last = last - 1;
+        }
+        for(int i = 0; i < last; i++)
+            maxheap(1, last);
+        printf("\nAfter maxheap");
+        display(1,1);
+        heapsort(root, last);
     }
 }
 
@@ -89,11 +96,11 @@ int main(){
 
     printf("\nThe maxheap is:\n");
     for(int i = 0; i < size; i++)
-        maxheap(1);
+        maxheap(1, size);
     display(1,1);
 
     printf("\nAfter heapsort");
-    for(int i = 0; i < size; i++)
+    //for(int i = 0; i < size; i++)
         heapsort(1, size);
     printf("Main after heapsort");
     display(1,1);
