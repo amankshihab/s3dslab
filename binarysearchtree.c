@@ -10,15 +10,11 @@ struct node{
 struct node *root = NULL, *temp;
 
 void insert();
-
-void inorder_nr();
 void inorder(struct node *r);
 void postorder(struct node *r);
 void preorder(struct node *r);
 void display(struct node *temp,int space);
-
 void search();
-
 void del(int item);
 
 int main()
