@@ -54,7 +54,11 @@ void heapsort(int root, int last){
     if(last > 1){
         
         swap(&heap[root], &heap[last]);
-        
+        //printf("\n");
+        //for(int i = 1; i <= size; i++)
+            
+          //  printf("%d  ", heap[i]);
+        //}
         last = last - 1;
         
         for(int i = 0; i < last; i++)
@@ -110,8 +114,9 @@ int main(){
     for(int i = 1; i <= size; i++)
         scanf("%d", &heap[i]);
 
-    maxheap(1, size);
-    maxheap(1,size);
+    for(int i = 0; i < size; i++)
+        maxheap(1, size);
+    
 
     printf("\nThe entered array in maxheap form:\n");
     display(1,1);
