@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #define count 10
 
-int heap[50], size;
+int heap[100], size;
 
 void display(int root, int space){
 
@@ -22,19 +22,6 @@ void display(int root, int space){
     display(2*root, space);
 }
 
-//root is the index of root of the particular subtree, same with lchild and rchild
-int greatest(int root, int lchild, int rchild){
-
-    if(heap[root] >= heap[lchild] && heap[root] >= heap[rchild])
-        return root;
-    
-    if(heap[lchild] >= heap[root] && heap[lchild] >= heap[rchild])
-        return lchild;
-    
-    if(heap[rchild] >= heap[root] && heap[rchild] >= heap[lchild])
-        return rchild;
-}
-
 //a and b are the 2 nos to swap
 void swap(int *a, int *b){
 
@@ -43,19 +30,17 @@ void swap(int *a, int *b){
     *b = temp;
 }
 
+//to find maxheap
 void maxheap(int index, int sz){
-
+    
     if(index <= sz){
         
         maxheap(2*index, sz);
         
-        int great = greatest(index, 2*index, 2*index+1);
-
-        //checking if right subree is greatest
-        if(heap[great] == heap[2*index])
+        if(2*index <= sz && heap[index] < heap[2*index])
             swap(&heap[index], &heap[2*index]);
-        //checking if left subtree is greatest
-        if(heap[great] == heap[2*index+1])
+
+        if(2 * index + 1 <= sz && heap[index] < heap[2*index+1])
             swap(&heap[index], &heap[2*index+1]);
 
         maxheap(2*index+1, sz);
@@ -65,20 +50,57 @@ void maxheap(int index, int sz){
 //root and last are indices
 void heapsort(int root, int last){
 
-    printf("\n%d", last);
     
     if(last > 1){
         
-        if(heap[root] > heap[last]){
-            
-            swap(&heap[root], &heap[last]);
-            last = last - 1;
-        }
+        swap(&heap[root], &heap[last]);
+        
+        last = last - 1;
+        
         for(int i = 0; i < last; i++)
             maxheap(1, last);
-        printf("\nAfter maxheap");
-        display(1,1);
+        
         heapsort(root, last);
+    }
+}
+
+//to delete a node
+void deletion(){
+
+    if(size < 1)
+        printf("\nHeap is empty, deletion not possible!");
+    else{
+
+        swap(&heap[1], &heap[size]);
+
+        display(1,1);
+        
+        heap[size] = '\0';
+        size -= 1;
+
+        maxheap(1, size);
+    }
+}
+
+//to insert a node towards the end
+void insertion(){
+
+    if(size > 100)
+        printf("\nThe heap is full!");
+    else{
+
+        printf("\nEnter the element to be inserted:");
+        int item;
+        scanf("%d", &item);
+
+        size += 1;
+
+        heap[size] = item;
+
+        maxheap(1, size);
+
+        printf("\nThe heap after inserting %d is:", item);
+        display(1,1);
     }
 }
 
@@ -91,19 +113,40 @@ int main(){
     for(int i = 1; i <= size; i++)
         scanf("%d", &heap[i]);
 
-    printf("\nThe entered heap tree is :\n");
-    display(1, 1);
+    maxheap(1, size);
 
-    printf("\nThe maxheap is:\n");
-    for(int i = 0; i < size; i++)
-        maxheap(1, size);
+    printf("\nThe entered array in maxheap form:\n");
     display(1,1);
 
-    printf("\nAfter heapsort");
-    //for(int i = 0; i < size; i++)
-        heapsort(1, size);
-    printf("Main after heapsort");
-    display(1,1);
+    while(1){
+
+        printf("\nHeap Tree Operations:\n\n1.Insertion\n2.Deletion\n3.Heap Sort\n4.Display\n5.Exit\n\nEnter your choice:");
+        int ch;
+        scanf("%d", &ch);
+
+        switch(ch){
+
+            case 1: insertion();
+                        break;
+
+            case 2: deletion();
+                        break;
+            
+            case 3: heapsort(1, size);
+                    printf("\nThe heap after heap sort is:");
+                    display(1,1);
+                    maxheap(1, size);
+                        break;
+            
+            case 4: display(1, 1);
+                        break;
+
+            case 5: exit(0);
+                        break;
+            
+            default:    printf("\n!!WRONG OPTION!!");
+        }
+    }
 
     return 0;
 }
