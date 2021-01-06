@@ -97,8 +97,7 @@ void insertion(){
 
         maxheap(1, size);
 
-        printf("\nThe heap after inserting %d is:", item);
-        display(1,1);
+        printf("\nThe heap after inserting %d is:\n", item);
     }
 }
 
@@ -126,22 +125,26 @@ int main(){
         switch(ch){
 
             case 1: insertion();
-                    maxheap(1,size);
-                        break;
+                    for(int i = 1; i <= size; i++)
+                        maxheap(1,size);
+
+                    display(1,1);
+                    break;
 
             case 2: deletion();
-                    maxheap(1,size);
+                    for(int i = 1; i <= size; i++)
+                        maxheap(1,size);
                     display(1,1);
                         break;
             
             case 3: heapsort(1, size);
-                    printf("\nThe heap after heap sort is:");
+                    printf("\nThe heap after heap sort is:\n");
                     display(1,1);
                     printf("\nSorted heap: ");
-                    for(int i = 1; i < size; i++)
+                    for(int i = 1; i <= size; i++)
                         printf("%d  ", heap[i]);
-                    maxheap(1, size);
-                    maxheap(1,size);
+                    for(int i = 1; i <= size; i++)
+                        maxheap(1,size);
                         break;
             
             case 4: display(1, 1);
