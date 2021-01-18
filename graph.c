@@ -1,99 +1,197 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+struct vertex{
+	int data;
+	struct vertex *link;
+};
+
+struct vertex *gptr = NULL;
+int n = 0;
+
+int visit[20], count = 0;
 
 struct node{
+	struct vertex *data;
+	struct node *link;
+};
 
-    int data;
-    struct node *link;
-} *graph[10];
+struct node *TOP = NULL;
+struct node *FRONT = NULL, *REAR = NULL;
 
-struct node *start;
 
-void print_links(int size){
-    
-    for(int i = 0; i < size; i++){
-
-        struct node *temp = graph[i] -> link;
-        //printf("%d", temp -> data);
-
-        printf("\nLinks of node %d: ", graph[i] -> data);
-        
-        while(temp != NULL){
-
-            printf("%d ", temp -> data);
-            temp = temp -> link;
-        }
-    }
+void push(struct vertex *vert){
+	struct node *p = malloc(sizeof(struct node));
+	p->data = vert;
+	p->link = TOP;
+	TOP = p;
 }
 
-void links(int sz){
-
-    //*start = graph[0];
-    
-    for(int i = 0; i < sz; i++){
-
-        printf("Enter the no. of links for the node %d:", graph[i] -> data);
-        int nlinks;
-        scanf("%d", &nlinks);
-
-        struct node * temp = graph[i];
-
-        for(int j = 0; j < nlinks; j++){
-
-            printf("Enter link %d of %d:", j+1, graph[i] -> data);
-            struct node *newnode = (struct node*)malloc(sizeof(struct node));
-            int link;
-            scanf("%d", &newnode -> data);
-            
-            temp -> link = newnode;
-            newnode -> link = NULL;
-            temp = newnode;
-        }
-    }
+struct vertex *pop(){
+	if(TOP == NULL){
+		return NULL;
+	}
+	else{
+		struct node *temp = TOP;
+		struct vertex *vert;
+		vert = temp->data;
+		TOP = TOP->link;
+		free(temp);
+		return vert;
+	}
 }
 
-/*void links(struct node *temp, int sz){
+void enqueue(struct vertex *vert){
+	struct node *p = malloc(sizeof(struct node));
+	p->data = vert;
+	p->link = NULL;
+	if(FRONT == NULL && REAR == NULL){
+		FRONT = p;
+	}
+	else{
+		REAR->link = p;
+	}
+	REAR = p;
+}
 
-    //*start = graph[0];
-    
-    for(int i = 0; i < sz; i++){
+struct vertex *dequeue(){
+	if(FRONT == NULL && REAR == NULL){
+		return NULL;
+	}
+	else{
+		struct node *temp = FRONT;
+		struct vertex *vert = temp->data;
+		if(FRONT == REAR){
+			FRONT = NULL;
+			REAR = NULL;
+		}
+		else{
+			FRONT = FRONT->link;
+		}
+		free(temp);
+		return vert;
+	}
+}
 
-        printf("Enter the no. of links for the node %d:", graph[i] -> data);
-        int nlinks;
-        scanf("%d", &nlinks);
+void init(){
+	int i;
+	for(i = 0; i < 20; i++){
+		visit[i] = 0;
+	}
+	count = 0;
+}
 
-        temp = graph[i];
+int visited(struct vertex *u){
+	int i;
+	for(i = 0; i < count; i++){
+		if(visit[i] == u->data){
+			return 1; 
+		}
+	}
+	visit[count] = u->data;
+	count++;
+	return 0;
+}
 
-        for(int j = 0; j < nlinks; j++){
+struct vertex *get_gptr(struct vertex *u){
+	int i = 0;
+	for(i = 0; i < n; i++){
+		if(gptr[i].data == u->data){
+			return &gptr[i];
+		}
+	}
+}
 
-            printf("Enter link %d of %d:", j+1, graph[i] -> data);
-            int link;
-            scanf("%d", &link);
-            //temp -> link = newnode;
-            //newnode -> link = NULL;
-            //temp = newnode;
+void dfs(){
+	if(gptr == NULL){
+		printf("Empty Graph!");
+	}
+	else{
+		init();
+		struct vertex *u, *ptr;
+		printf("\nDFS Traversal: ");
+		push(&gptr[0]);
+		while(TOP != NULL){
+			u = pop();
+			if(visited(u) == 0){
+				printf("%d  ", u->data);
+				ptr = get_gptr(u);
+				ptr = ptr->link;
+				while(ptr != NULL){
+					push(ptr);
+					ptr = ptr->link;
+				}
+			}
+		}
+	}
+}
 
+void bfs(){
+	if(gptr == NULL){
+		printf("Empty Graph!");
+	}
+	else{
+		init();
+		struct vertex *u, *ptr;
+		printf("\nBFS Traversal: ");
+		enqueue(&gptr[0]);
+		while(FRONT != NULL && REAR != NULL){
+			u = dequeue();
+			if(visited(u) == 0){
+				printf("%d  ", u->data);
+				ptr = get_gptr(u);
+				ptr = ptr->link;
+				while(ptr != NULL){
+					enqueue(ptr);
+					ptr = ptr->link;
+				}
+			}
+		}
+	}
+}
+void create(){
+	
+	printf("\nEnter number of vertices: ");
+	scanf("%d", &n);
+	gptr = malloc(sizeof(struct vertex) * n);
+	struct vertex *edge, *ptr;
+	int i, j, e;
+	
+	//printf("Enter vertices %d:\n", n);
+	
+	for(i = 0; i < n; i++){
+		printf("\nEnter vertex %d: ", i);
+		scanf("%d", &gptr[i].data);
+		gptr[i].link = NULL;
+	}
+	
+	printf("\nEntered vertices are: ");
+	for(i = 0; i < n; i++){
+		printf("%d  ", gptr[i].data);
+	}
+	printf("\n");
+	
+	for(i = 0; i < n; i++){
+		printf("\nNo. of Edges for Vertex '%d': ", gptr[i].data);
+		scanf("%d", &e);
+		ptr = &gptr[i];
 
-        }
-    }
-}*/
+		for(j = 0; j < e; j++){
+			struct vertex *vert = malloc(sizeof(struct vertex));
+			ptr->link = vert;
+			vert->link = NULL;
+			printf("Enter Edge %d: ", j + 1);
+			scanf("%d", &vert->data);
+			ptr = ptr->link;
+		}
+	}
+	printf("\n");
+}
 
-int main(){
-
-    printf("Enter the no. of nodes in the graph(MAX:10):");
-    int size;
-    scanf("%d", &size);
-
-    for(int i = 0; i < size; i++){
-
-        printf("\nEnter the value of the node:");
-        graph[i] = (struct node*)malloc(sizeof(struct node));
-        scanf("%d", &graph[i] -> data); 
-    }
-
-    links(size);
-    print_links(size);
-
-    return 0;
+void main(){
+	printf("\nEnter your graph:\n");
+	create();
+	dfs();
+	bfs();
+	printf("\n");
 }
