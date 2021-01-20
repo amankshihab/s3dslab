@@ -96,12 +96,13 @@ int visited(struct vertex *u){
 struct vertex *get_gptr(struct vertex *u){
 	int i = 0;
 	for(i = 0; i < n; i++){
-		if(gptr[i].data == u->data){
+		if(gptr[i].data == u -> data){
 			return &gptr[i];
 		}
 	}
 }
 
+//dfs traversal of graph
 void dfs(){
 	if(gptr == NULL){
 		printf("Empty Graph!");
@@ -126,6 +127,7 @@ void dfs(){
 	}
 }
 
+//bfs traversal of graph
 void bfs(){
 	if(gptr == NULL){
 		printf("Empty Graph!");
@@ -149,6 +151,8 @@ void bfs(){
 		}
 	}
 }
+
+//Creates the graph
 void create(){
 	
 	printf("\nEnter number of vertices: ");
@@ -188,10 +192,13 @@ void create(){
 	printf("\n");
 }
 
-void main(){
+//main
+int main(){
 	printf("\nEnter your graph:\n");
 	create();
 	dfs();
 	bfs();
 	printf("\n");
+
+	return 0;
 }
