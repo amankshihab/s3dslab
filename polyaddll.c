@@ -117,16 +117,16 @@ void add(struct poly *s1, struct poly *s2){
         }
     }
 
-        while(s2 != NULL){
+    while(s2 != NULL){
 
-            result(s2 -> coeff, s2 -> exp);
-            s2 = s2 -> next;
-        }
-        while(s1 != NULL){
+        result(s2 -> coeff, s2 -> exp);
+        s2 = s2 -> next;
+    }
+    while(s1 != NULL){
 
-            result(s1 -> coeff, s1 -> exp);
-            s1 = s1 -> next;
-        }
+        result(s1 -> coeff, s1 -> exp);
+        s1 = s1 -> next;
+    }
 }
 
 void main(){

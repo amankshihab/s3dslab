@@ -131,6 +131,8 @@ void build_tree(int i, int item){
 
             build_tree(0, '\0');
         }
+        
+        last = i;
 
         printf("Node %d has right subtree(y/n)?", i);
         char c;
@@ -178,7 +180,7 @@ void preorder(int i){
     }
 }
 
-void main(){
+int main(){
 
     int ch, root, key, item, del;
 
@@ -218,4 +220,6 @@ void main(){
             default : printf("\n!!WRONG OPTIONS!!\n");
         }
     }
+    
+    return 0;
 }
